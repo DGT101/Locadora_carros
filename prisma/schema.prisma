@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Cor {
+  id  Int @id @default(autoincrement())
+  nome  String @unique
+  carro Carro[]
+
+  @@map("cores")
+}
+
+model Carro {
+  id  Int @id @default(autoincrement())
+  nome  String
+  ano  Int
+  disponibilidade Boolean @default(true)
+  cor Cor @relation(fields: [corId], references: [id])
+  corId Int
+  Locacao Locacao[]
+
+  @@map("carros")
+}
+
+model Cliente {
+  id  Int @id @default(autoincrement())
+  name  String @unique
+  cpf String
+  ativo Boolean @default(true)
+  endereco Endereco[]
+  Locacao Locacao[]
+
+  @@map("clientes")
+}
+
+model Endereco {
+  id  Int @id @default(autoincrement())
+  rua  String
+  numero  Int
+  cidade  String
+  estado  String
+  codigoPostal  String
+  pais  String
+  cliente  Cliente @relation(fields: [clienteId], references: [id])
+  clienteId Int
+
+  @@map("enderecos")
+}
+
+model Locacao {
+  id  Int @id @default(autoincrement())
+  valorDia Float
+  dataInicio  String
+  dataFim String
+  total Float
+  carro Carro @relation(fields: [carroId], references: [id])
+  carroId Int
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+  clienteId Int
+
+  @@map("locacoes")
+}
