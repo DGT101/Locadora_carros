@@ -7,9 +7,9 @@ CREATE TABLE "new_clientes" (
     "cpf" TEXT NOT NULL,
     "ativo" BOOLEAN NOT NULL DEFAULT true
 );
-INSERT INTO "new_clientes" ("cpf", "id", "name") SELECT "cpf", "id", "name" FROM "clientes";
+INSERT INTO "new_clientes" ("cpf", "id", "nome") SELECT "cpf", "id", "nome" FROM "clientes";
 DROP TABLE "clientes";
 ALTER TABLE "new_clientes" RENAME TO "clientes";
-CREATE UNIQUE INDEX "clientes_name_key" ON "clientes"("name");
+CREATE UNIQUE INDEX "clientes_name_key" ON "clientes"("nome");
 PRAGMA foreign_keys=ON;
 PRAGMA defer_foreign_keys=OFF;

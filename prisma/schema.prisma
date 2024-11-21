@@ -29,7 +29,7 @@ model Carro {
 
 model Cliente {
   id  Int @id @default(autoincrement())
-  name  String @unique
+  nome  String @unique
   cpf String
   ativo Boolean @default(true)
   endereco Endereco[]
